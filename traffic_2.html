@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shockwave Traffic Simulation</title>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<!-- color support -->
+	<script src="http://bgrins.github.io/TinyColor/tinycolor.js"></script>
+</head>
+<body>
+	<h1>Traffic Simulation</h1>
+	<h2>Adding Traffic</h2>
+	<p>Now let's add some more rules:</p>
+	<ul>
+		<li>Cars follow the <a href="http://www.driversedguru.com/driving-articles/drivers-ed-extras/the-3-second-following-distance-rule/">three second rule</a>. If a car is less than three seconds away from the car in front of it, it will deaccelerate such that it comes to a complete stop within 2 seconds.</li>
+		<li>If a car is not stuck behind the car in front of it and it is moving slower than it's maximum speed, it will accelerate at a constant 3 m/s until it reaches its maximum velocity.</li>
+		<li>I introduced a bit of randomness among maximum velocity (+/- 1 kph)</li>
+		<li>Cars are now color-coded by speed. Green is faster, red is slower.</li>
+		<li>To make things interesting, I introduce one car that has a far larger maximum speed than the others (road rage). This system will gradually settle into something of an equilibrium, where a choo-choo train forms behind the slowest car (traveling at its maximum velocity).</li>
+	</ul>
+	<p>Positions and velocities are computed using simple Euler integration.</p>
+	
+	<button id="start">start</button>
+	<button id="stop">stop</button>
+	<div id="experiment1"></div>
+	<script src="ov.js"></script>
+</body>
+</html>
