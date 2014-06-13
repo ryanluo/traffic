@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shockwave Traffic Simulation</title>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<h1>Traffic Simulation</h1>
+	<h2>Trivial Example</h2>
+	<p>For starters, here is a simple simulation of cars driving around a circular track. Simulation proceeds according to the following rules: </p>
+	<ul>
+		<li>The single-lane circular track below represents a circumference of 500 meters. </li>
+		<li>Each car is represented as a circle of radius 2.5 meters</li>
+		<li>Each car cruises at 9 meters per second (32 kph) counterclockwise.</li>
+	</ul>
+	<p>This example is very basic but we'll add functionality piece by piece and build our way up to a more complex simulation.</p>
+	<button id="start">start</button>
+	<button id="stop">stop</button>
+	<div id="experiment1"></div>
+		<script>
+			var exp1 = document.getElementById("experiment1");
+			var w=400;
+			var h=400;
+
+			// set up SVG container
+			var svg = d3.select("#experiment1")
+				.append("svg")
+				.attr("width",w)
+				.attr("height",h)
+				.attr("id","experiment1_viz")
+				.attr("xmlns", "http://www.w3.org/2000/svg");
+
+			var radius_pixels = 160; 
+			// conversion factor from arbitrary units to meters
+			var r = (2*Math.PI*radius_pixels)/500; 
+
+			// draw the track
+			var track = svg.append("circle")
+				.attr("cx",w/2)
+				.attr("cy",h/2)
+				.attr("r",radius_pixels)
+				.attr("fill","white")
+				.style({'stroke': '#666666', 'stroke-width': 5 * r})
+
+			// initialize vehicle data
+			var N = 30;
+			var data = []
+			for (var i=0; i<N; i++)
+			{
+				var d = {}
+				var theta = i*(2*Math.PI/N);
+				d.x = w/2 + radius_pixels * Math.cos(theta);
+				d.y = h/2 + radius_pixels * Math.sin(theta);
+				d.r = 2.5 * r;
+				data.push(d);
+			}
+			
+			var speed = 9;
+			function redraw(ms) {
+				// recompute the position of each car
+				for (var i=0; i<N; i++)
+				{
+					var dtheta = speed/500 * (2 * Math.PI) * ms/1000;
+					var theta = i*(2*Math.PI/N) + dtheta;	
+					var d = data[i];
+					d.x = w/2 + radius_pixels * Math.cos(theta);
+					d.y = h/2 + radius_pixels * Math.sin(theta);
+				}
+
+				// data join
+				var vehicles = svg.selectAll(".vehicle").data(data)
+
+				// update old elements
+				vehicles
+					.attr("cx", function(d) { return d.x; })
+					.attr("cy", function(d) { return d.y; })
+
+				// create new vehicles
+				vehicles.enter().append("circle")
+					.attr("class","vehicle")
+					.attr("cx", function(d) { return d.x; })
+			    	.attr("cy", function(d) { return d.y; })
+			    	.attr("r", function(d) { return d.r; })
+			    	.attr("fill","#33CC33")
+
+			    // exit
+			    vehicles.exit().remove()
+			}
+
+			// ui controllers
+			var animID;
+			var startButton = document.getElementById("start");
+			var stopButton = document.getElementById("stop");
+			startButton.onclick = function() {
+				startButton.disabled = true;
+				requestAnimationFrame(repeatOften);
+			}
+			stopButton.onclick = function() {
+				cancelAnimationFrame(animID);
+				startButton.disabled = false;
+			}
+			function repeatOften(ms) {
+				// ms = time in milliseconds
+				redraw(ms)
+			  	animID = requestAnimationFrame(repeatOften);
+			}
+			// start by default
+			startButton.click()
+
+		</script>
+</body>
+</html>
