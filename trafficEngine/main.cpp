@@ -1,10 +1,11 @@
 #include <iostream>
-
-using namespace std;
+#include "core/vec2.h"
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    vec2 v(1.1,2);
+    vec2::print(v);
+//    std::cout << "Hello World!" << std::endl;
     return 0;
 }
 

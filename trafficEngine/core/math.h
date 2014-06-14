@@ -4,6 +4,12 @@
 **   Author : ericjang
 **   Created: 6/12/2014
 **
+**
+**   This header includes the stdlib math functions and
+**   adds some helpful macros.
+**
+**   Usasge:
+**      #include "math.h" // instead of #include <math.h>
 **************************************************************************/
 
 #ifndef MATH_H

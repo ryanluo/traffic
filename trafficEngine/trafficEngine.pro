@@ -15,6 +15,6 @@ HEADERS += \
     core/road.h \
     core/lane.h \
     core/vehicle.h \
-    core/vector2.h
+    core/vec2.h
 
 
