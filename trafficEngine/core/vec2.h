@@ -47,6 +47,7 @@ struct vec2
     inline float& operator [] (int i) { return data[i]; }
     inline float operator [] (int i) const { return data[i]; }
     inline vec2& operator -= ( const vec2 &rhs ) { x -= rhs.x; y -= rhs.y; return *this; }
+    inline vec2 operator + ( const vec2 &rhs ) const { return vec2( x+rhs.x, y+rhs.y ); }
     inline vec2 operator - ( const vec2 &rhs ) const { return vec2( x-rhs.x, y-rhs.y ); }
     inline vec2& operator *= ( const vec2 &rhs ) { x *= rhs.x; y *= rhs.y; return *this; }
     inline vec2 operator * ( const vec2 &rhs ) const { return vec2( x*rhs.x, y*rhs.y ); }
@@ -60,6 +61,7 @@ struct vec2
     inline vec2 operator / ( float f ) const { float fi = 1.f/f; return vec2( x*fi, y*fi ); }
     inline vec2& operator += ( float f ) { x += f; y += f; return *this; }
     inline vec2 operator + ( float f ) const { return vec2( x+f, y+f ); }
+
     inline vec2& operator -= ( float f ) { x -= f; y -= f; return *this; }
     inline vec2 operator - ( float f ) const { return vec2( x-f, y-f ); }
 
@@ -91,6 +93,14 @@ struct vec2
     inline static void print( const vec2 &v )
     {
         printf( "[%10f %10f]\n", v.x, v.y);
+    }
+
+    // distance functions
+    inline static float dist2( const vec2 &a, const vec2 &b) {
+        return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
+    }
+    inline static float dist(const vec2 &a, const vec2 &b) {
+        return sqrtf(dist2(a,b));
     }
 };
 

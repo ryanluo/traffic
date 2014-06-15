@@ -1,11 +1,19 @@
 #include <iostream>
 #include "core/vec2.h"
+#include "unitTests/runTests.cpp"
+
+#define RUN_TESTS 1
+
+extern void runTests();
 
 int main()
 {
-    vec2 v(1.1,2);
-    vec2::print(v);
-//    std::cout << "Hello World!" << std::endl;
+#if RUN_TESTS
+    runTests();
+#else
+    std::cout << "Hello World!" << std::endl;
+#endif
+
     return 0;
 }
 
