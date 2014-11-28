@@ -4,40 +4,42 @@ var h=500;
 // radius of track, in pixels
 var radius_pixels = 200; 
 // length of track , in meters
-var L = 230;
+var L = 20;
 // width of lane, in meters
 var track_width = 5;
 // number of vehicles
-var N = 22;
-var exp1 = document.getElementById("experiment1");
+var N = 10;
+//var exp1 = document.getElementById("experiment1");
 var density = L/N;
 var a = 1.0;
 var c = 2.0;
 
 // set up SVG container
+/*
 var svg = d3.select("#experiment1")
 .append("svg")
 .attr("width",w)
 .attr("height",h)
 .attr("id","experiment1_viz")
 .attr("xmlns", "http://www.w3.org/2000/svg");
+*/
 // conversion factor from arbitrary units to meters
 var r = (2*Math.PI*radius_pixels)/L; 
 // draw the track
-var track = svg.append("circle")
+/* var track = svg.append("circle")
 	.attr("cx",w/2)
 	.attr("cy",h/2)
 	.attr("r",radius_pixels)
 	.attr("fill","white")
 	.style({'stroke': '#666666', 'stroke-width': track_width * r})
-
+*/
 function tanh(value) {
         var y = Math.exp(2 * value);
         return (y - 1) / (y + 1);	
 }
 
 function V(dx) {
-	return 6 * (tanh(0.3 * dx - c) + tanh(c)); //4*Math.random();
+	return (tanh(1.0 * dx - c) + tanh(c)); //4*Math.random();
 }
 function calcf(x, v, fx, fv) {
 	for(var i = 0; i < N; i++) {
@@ -242,9 +244,9 @@ function redraw(ms) {
 
 // ui controllers
 var animID;
-var startButton = document.getElementById("start");
-var stopButton = document.getElementById("stop");
-startButton.onclick = function() {
+//var startButton = document.getElementById("start");
+//var stopButton = document.getElementById("stop");
+/*startButton.onclick = function() {
 	startButton.disabled = true;
 	requestAnimationFrame(repeatOften);
 }
@@ -272,18 +274,27 @@ function skip(next_ms) {
 
 // start simulation on page load
 startButton.click()
+*/
 var cout = [];
 var s_time = 0;
-var TIME = 50;
+var TIME = 160;
 var INTERVAL = 10;
+var buffer = "";
 function main() {
 	init(x, v);
 	for (var i = 0; s_time < TIME; i++) {
 		integrate(x, v);
 		if (i % INTERVAL) {
+			buffer += s_time 
+			buffer += ",";
 			for (var j = 0; j < N; j++) {
-				console.log("" + x[j] + " " + s_time);
+				buffer += x[j] + ",";
 			}
+			console.log(buffer);
+			buffer = ""
 		}
 	}
 }
+
+
+main()
