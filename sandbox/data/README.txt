@@ -1,0 +1,1 @@
+i'd say that i put this file here to say that the Main1 program will produce its data here automatically so that the data doesn't clutter the hw4 directory...but it's really just to make sure that there's a folder here for the program to write to.

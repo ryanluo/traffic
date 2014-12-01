@@ -11,7 +11,7 @@ var track_width = 5;
 var N = 22;
 var exp1 = document.getElementById("experiment1");
 var density = L/N;
-var a = 1.0;
+var a = 2.0;
 var c = 2.0;
 
 // set up SVG container
@@ -37,7 +37,8 @@ function tanh(value) {
 }
 
 function V(dx) {
-	return 6 * (tanh(0.3 * dx - c) + tanh(c)); //4*Math.random();
+//	return 6 * (tanh(0.3 * dx - c) + tanh(c)); //4*Math.random();
+        return 16.8*tanh(0.086 * (dx - 25) + 0.914) + 17;
 }
 function calcf(x, v, fx, fv) {
 	for(var i = 0; i < N; i++) {
